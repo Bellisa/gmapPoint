@@ -1,0 +1,40 @@
+<div>
+  <div class='app-settings'>
+    <input type="file" (change)="onFileLoad($event)">
+   width: <input type="text" [(ngModel)]="WIDTH_MAP" (change)="onChangeWidth($event)">  
+   heigth: <input type="text" [(ngModel)]="HIEGTH_MAP" (change)="onChangeHeigth($event)">
+   <label >AC: {{distansAC}}km </label><label >AB: {{distansAB}}km </label>
+  </div>
+  
+  <div class="app-map">
+    <agm-map
+      [latitude]="LATITUDE"
+      [longitude]="LONGITUDE"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [fullscreenControl]="true"
+      [mapTypeControl]="true"
+      [attr.style]='styleCss'
+      [fitBounds]="gpsMarkers.length > 1"
+      (mapReady)="mapReady($event)"
+      mapTypeId='satellite'
+      >
+      <agm-marker *ngFor="let marker of gpsMarkers"
+      [latitude]="marker.latitude"
+      [longitude]="marker.longitude"
+      [label]="marker.id.toString()"
+      [agmFitBounds]="true">
+  
+        <agm-info-window *ngIf="marker.title.length > 1"
+        [isOpen]="gpsMarkers.length > 1">
+        <strong>{{marker.title}}</strong>
+        </agm-info-window>
+  
+  </agm-marker>
+    </agm-map>
+  </div>
+</div>
+
+
+
+
